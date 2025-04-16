@@ -6,31 +6,57 @@ editor: visual
 self-contained: true
 ---
 
-## Title
+## Load packages
 
 ```{r}
-
+library(adegenet)
+library(ggtree)
 ```
 
-## Title
+## Load FASTA file
 
 ```{r}
-
+seqs <- fasta2DNAbin("./data/usflu.fasta")
 ```
 
-## Title
+## Load annotation data
 
 ```{r}
-
+library(tidyverse)
+a <- read_csv("./data/usflu.annot.csv")
+head(a)
 ```
 
-## Title
+## Wrangle annotation data
 
 ```{r}
-
+a <- a |>
+  mutate(state = str_extract(misc, "(?<=/)[^/]+(?=/)")) |>
+  mutate(state = ifelse(state == "Memphis", "Tennessee", state)) |>
+  select(-`...1`, -misc)
+head(a)
 ```
 
-## Title
+## Pairwise distances
+
+```{r}
+library(ape)
+dist <- dist.dna(seqs, model = "K80")
+```
+
+## Create tree object
+
+```{r}
+t <- bionj(dist)
+```
+
+## Plot tree
+
+```{r}
+plot(t, cex = 0.6)
+```
+
+## X
 
 ```{r}
 
