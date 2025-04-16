@@ -3,6 +3,7 @@ title: "Methods Exploration: Phylogenetics in R"
 author: "John Hinkle"
 format: html
 editor: visual
+self-contained: true
 ---
 
 ## Title
