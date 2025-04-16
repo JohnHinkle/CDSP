@@ -55,11 +55,27 @@ t <- bionj(dist)
 ## Plot tree
 
 ```{r}
-plot(t, cex = 0.6)
+ggtree(t) +
+  geom_tiplab()
 ```
 
-## X
+## Add annotation data to the tree
 
 ```{r}
+p <- ggtree(t) %<+% a
+```
 
+## Add color to trees
+
+```{r}
+library(viridis)
+p + geom_tiplab(aes(color = year)) +
+    scale_color_viridis_c() +
+    theme_tree2()
+```
+
+```{r}
+p + geom_tiplab(aes(color = state)) +
+    scale_color_hue(n = 15) +
+    theme_tree2()
 ```
