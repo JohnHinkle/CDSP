@@ -15,7 +15,7 @@ library(ggtree)
 
 ## Load FASTA file
 
-This contains sequence data in FASTA format
+This contains sequence data
 
 ```{r}
 seqs <- fasta2DNAbin("./data/usflu.fasta")
