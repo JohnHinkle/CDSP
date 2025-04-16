@@ -55,6 +55,7 @@ t <- bionj(dist)
 ## Plot tree
 
 ```{r}
+# open tree in new window for optimal viewing
 ggtree(t) +
   geom_tiplab()
 ```
