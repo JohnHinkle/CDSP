@@ -50,7 +50,12 @@ dist <- dist.dna(seqs, model = "K80")
 ## Create tree object
 
 ```{r}
+# Neighbor-Joining 2.0
 t <- bionj(dist)
+
+# Neighbor-Joining
+# Maximum Likelihood
+# Minimum Evolution
 ```
 
 ## Plot tree
@@ -85,5 +90,5 @@ p + geom_tiplab(aes(color = state)) +
 ## Annotating branches with state flags
 
 ```{r}
-
+glimpse(a)
 ```

@@ -3129,10 +3129,10 @@ vertical-align: -.125em;
 
 Please cite:
 
-S Xu, Z Dai, P Guo, X Fu, S Liu, L Zhou, W Tang, T Feng, M Chen, L
-Zhan, T Wu, E Hu, Y Jiang, X Bo, G Yu. ggtreeExtra: Compact
-visualization of richly annotated phylogenetic data. Molecular Biology
-and Evolution. 2021, 38(9):4039-4042. doi: 10.1093/molbev/msab166</code></pre>
+Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam.
+ggtree: an R package for visualization and annotation of phylogenetic
+trees with their covariates and other associated data. Methods in
+Ecology and Evolution. 2017, 8(1):28-36. doi:10.1111/2041-210X.12628</code></pre>
 </div>
 </div>
 </section>
@@ -3249,7 +3249,12 @@ Attaching package: &#39;ape&#39;</code></pre>
 <section id="create-tree-object" class="level2">
 <h2 class="anchored" data-anchor-id="create-tree-object">Create tree object</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">bionj</span>(dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Neighbor-Joining 2.0</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">bionj</span>(dist)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Neighbor-Joining</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Maximum Likelihood</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimum Evolution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plot-tree" class="level2">
@@ -3314,6 +3319,17 @@ you can set `options(ignore.negative.edge=TRUE)`, then re-run ggtree.</code></pr
 </section>
 <section id="annotating-branches-with-state-flags" class="level2">
 <h2 class="anchored" data-anchor-id="annotating-branches-with-state-flags">Annotating branches with state flags</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 80
+Columns: 4
+$ accession &lt;chr&gt; &quot;CY013200&quot;, &quot;CY013781&quot;, &quot;CY012128&quot;, &quot;CY013613&quot;, &quot;CY012160&quot;, …
+$ year      &lt;dbl&gt; 1993, 1993, 1993, 1993, 1993, 1994, 1994, 1994, 1994, 1994, …
+$ state     &lt;chr&gt; &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, …
+$ Image     &lt;chr&gt; &quot;images/New York.png&quot;, &quot;images/New York.png&quot;, &quot;images/New Yo…</code></pre>
+</div>
+</div>
 </section>
 
 </main>
