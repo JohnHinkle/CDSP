@@ -35,6 +35,7 @@ head(a)
 a <- a |>
   mutate(state = str_extract(misc, "(?<=/)[^/]+(?=/)")) |>
   mutate(state = ifelse(state == "Memphis", "Tennessee", state)) |>
+  mutate(Image = paste0("images/", state, ".png")) |>
   select(-`...1`, -misc)
 head(a)
 ```
@@ -79,4 +80,10 @@ p + geom_tiplab(aes(color = year)) +
 p + geom_tiplab(aes(color = state)) +
     scale_color_hue(n = 15) +
     theme_tree2()
+```
+
+## Annotating branches with state flags
+
+```{r}
+
 ```

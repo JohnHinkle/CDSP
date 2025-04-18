@@ -3129,9 +3129,10 @@ vertical-align: -.125em;
 
 Please cite:
 
-Guangchuang Yu.  Data Integration, Manipulation and Visualization of
-Phylogenetic Trees (1st edition). Chapman and Hall/CRC. 2022,
-doi:10.1201/9781003279242, ISBN: 9781032233574</code></pre>
+S Xu, Z Dai, P Guo, X Fu, S Liu, L Zhou, W Tang, T Feng, M Chen, L
+Zhan, T Wu, E Hu, Y Jiang, X Bo, G Yu. ggtreeExtra: Compact
+visualization of richly annotated phylogenetic data. Molecular Biology
+and Evolution. 2021, 38(9):4039-4042. doi: 10.1093/molbev/msab166</code></pre>
 </div>
 </div>
 </section>
@@ -3208,18 +3209,19 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> a <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">state =</span> <span class="fu">str_extract</span>(misc, <span class="st">&quot;(?&lt;=/)[^/]+(?=/)&quot;</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">state =</span> <span class="fu">ifelse</span>(state <span class="sc">==</span> <span class="st">&quot;Memphis&quot;</span>, <span class="st">&quot;Tennessee&quot;</span>, state)) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">...1</span><span class="st">`</span>, <span class="sc">-</span>misc)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Image =</span> <span class="fu">paste0</span>(<span class="st">&quot;images/&quot;</span>, state, <span class="st">&quot;.png&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">...1</span><span class="st">`</span>, <span class="sc">-</span>misc)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  accession  year state   
-  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;   
-1 CY013200   1993 New York
-2 CY013781   1993 New York
-3 CY012128   1993 New York
-4 CY013613   1993 New York
-5 CY012160   1993 New York
-6 CY012272   1994 New York</code></pre>
+<pre><code># A tibble: 6 × 4
+  accession  year state    Image              
+  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;              
+1 CY013200   1993 New York images/New York.png
+2 CY013781   1993 New York images/New York.png
+3 CY012128   1993 New York images/New York.png
+4 CY013613   1993 New York images/New York.png
+5 CY012160   1993 New York images/New York.png
+6 CY012272   1994 New York images/New York.png</code></pre>
 </div>
 </div>
 </section>
@@ -3309,6 +3311,9 @@ you can set `options(ignore.negative.edge=TRUE)`, then re-run ggtree.</code></pr
 </div>
 </div>
 </div>
+</section>
+<section id="annotating-branches-with-state-flags" class="level2">
+<h2 class="anchored" data-anchor-id="annotating-branches-with-state-flags">Annotating branches with state flags</h2>
 </section>
 
 </main>
