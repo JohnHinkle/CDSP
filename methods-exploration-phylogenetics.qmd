@@ -35,7 +35,7 @@ head(a)
 a <- a |>
   mutate(state = str_extract(misc, "(?<=/)[^/]+(?=/)")) |>
   mutate(state = ifelse(state == "Memphis", "Tennessee", state)) |>
-  mutate(Image = paste0("images/", state, ".png")) |>
+  mutate(ImagePath = paste0("states/", state, ".png")) |>
   select(-`...1`, -misc)
 head(a)
 ```
@@ -91,4 +91,8 @@ p + geom_tiplab(aes(color = state)) +
 
 ```{r}
 glimpse(a)
+```
+
+```{r}
+us_state_flag_tree(t, a, image_column = "ImagePath", label_column = "accession")
 ```
