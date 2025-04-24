@@ -11,6 +11,7 @@ self-contained: true
 ```{r}
 library(adegenet)
 library(ggtree)
+library(ggimage)
 ```
 
 ## Load FASTA file
@@ -34,9 +35,7 @@ head(a)
 ```{r}
 a <- a |>
   mutate(state = str_extract(misc, "(?<=/)[^/]+(?=/)")) |>
-  mutate(state = ifelse(state == "Memphis", "Tennessee", state)) |>
-  mutate(ImagePath = paste0("states/", state, ".png")) |>
-  select(-`...1`, -misc)
+  mutate(state = ifelse(state == "Memphis", "Tennessee", state))
 head(a)
 ```
 
