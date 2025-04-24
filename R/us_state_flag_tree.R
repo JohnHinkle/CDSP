@@ -1,4 +1,4 @@
-us_state_flag_tree <- function(tree, metadata, image_column = "image_path", label_column = "label") {
+us_state_flag_tree <- function(tree, metadata, image_column = "ImagePath", label_column = "label") {
 
   # create ggtree object from tree object
   p <- ggtree(tree)
