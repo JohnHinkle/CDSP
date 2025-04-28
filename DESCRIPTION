@@ -22,5 +22,8 @@ Imports:
     ggtree,
     readr
 Suggests: 
+    knitr,
+    rmarkdown,
     tidyverse,
     viridis
+VignetteBuilder: knitr
