@@ -2,10 +2,10 @@ Package: phylo101
 Title: Introduction to Phylogenetics
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "John",
+           family = "Hinkle",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "john.hinkle@utexas.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 Depends: R (>= 4.3)
