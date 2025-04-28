@@ -20,10 +20,10 @@ Imports:
     dplyr,
     ggimage,
     ggtree,
-    readr
+    readr,
+    viridis
 Suggests: 
     knitr,
     rmarkdown,
-    tidyverse,
-    viridis
+    tidyverse
 VignetteBuilder: knitr
