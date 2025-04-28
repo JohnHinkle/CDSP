@@ -19,6 +19,8 @@ Imports:
     ape,
     dplyr,
     ggimage,
-    ggtree
+    ggtree,
+    readr
 Suggests: 
+    tidyverse,
     viridis
