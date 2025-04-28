@@ -14,6 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+# phylo101: Introduction to Phylogenetics
+
+## Load required packages
+
 ```{r setup}
 library(adegenet)
 library(ape)
@@ -86,3 +90,4 @@ p + geom_tiplab(aes(color = state), size = 3) +
     scale_color_hue(n = 15) +
     theme_tree2()
 ```
+
