@@ -90,4 +90,3 @@ p + geom_tiplab(aes(color = state), size = 3) +
     scale_color_hue(n = 15) +
     theme_tree2()
 ```
-
