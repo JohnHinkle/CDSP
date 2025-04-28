@@ -15,5 +15,74 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+library(adegenet)
+library(ape)
+library(ggtree)
+library(ggimage)
+library(readr)
 library(phylo101)
+```
+
+## Check that metadata is loaded
+
+```{r}
+d <- USFluMetadata
+print(d)
+```
+
+## Check that sequences are loaded
+
+```{r}
+s <- USFluSeqs
+print(s)
+```
+
+## Calculate pairwise distances
+
+```{r}
+dist <- dist.dna(s, model = "K80")
+```
+
+## Create tree object
+
+```{r}
+# Neighbor-Joining 2.0
+t <- bionj(dist)
+
+# Neighbor-Joining
+# Maximum Likelihood
+# Minimum Evolution
+```
+
+## Plot/visualize tree using ggtree
+
+```{r}
+# open tree in new window for optimal viewing
+ggtree(t) +
+  geom_tiplab()
+```
+
+## Add metadata to the tree
+
+```{r}
+p <- ggtree(t) %<+% d
+```
+
+## Annotate tree tip labels using color
+
+### Color by year
+
+```{r}
+library(viridis)
+p + geom_tiplab(aes(color = year), size = 3) +
+    scale_color_viridis_c() +
+    theme_tree2()
+```
+
+### Color by state
+
+```{r}
+p + geom_tiplab(aes(color = state), size = 3) +
+    scale_color_hue(n = 15) +
+    theme_tree2()
 ```

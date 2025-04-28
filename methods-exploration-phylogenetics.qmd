@@ -10,17 +10,14 @@ self-contained: true
 
 ```{r}
 library(adegenet)
+library(ape)
 library(ggtree)
 library(ggimage)
+library(readr)
 library(phylo101)
 ```
 
-## Load FASTA file
-
-This contains sequence data in FASTA format
-
 ```{r}
-seqs <- fasta2DNAbin("./data/usflu.fasta")
 ```
 
 ## Load annotation data
