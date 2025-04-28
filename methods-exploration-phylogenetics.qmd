@@ -35,8 +35,17 @@ head(a)
 ```{r}
 a <- a |>
   mutate(state = str_extract(misc, "(?<=/)[^/]+(?=/)")) |>
-  mutate(state = ifelse(state == "Memphis", "Tennessee", state))
+  mutate(state = ifelse(state == "Memphis", "Tennessee", state)) |>
+  select(-`...1`, -misc)
 head(a)
+```
+
+```{r}
+to_image <- function(data, column_name = "state", new_dir = "states"){
+  dplyr::mutate(data, ImagePath = paste0(new_dir, "/", .data[[column_name]], ".png"))
+}
+
+a <- to_image(a)
 ```
 
 ## Pairwise distances
@@ -75,13 +84,13 @@ p <- ggtree(t) %<+% a
 
 ```{r}
 library(viridis)
-p + geom_tiplab(aes(color = year)) +
+p + geom_tiplab(aes(color = year), size = 3) +
     scale_color_viridis_c() +
     theme_tree2()
 ```
 
 ```{r}
-p + geom_tiplab(aes(color = state)) +
+p + geom_tiplab(aes(color = state), size = 3) +
     scale_color_hue(n = 15) +
     theme_tree2()
 ```
@@ -105,7 +114,7 @@ us_state_flag_tree <- function(tree, metadata, image_column = "image_path", labe
     left_join(metadata, by = setNames(label_column, "label"))
 
   # create "offset" to space flag icons at end of tip label, to prevent overlap
-  offset <- max(tree_data$x, na.rm = TRUE) * 0.085
+  offset <- max(tree_data$x, na.rm = TRUE) * 0.15
 
   # create ggtree plot
   p +
@@ -114,7 +123,7 @@ us_state_flag_tree <- function(tree, metadata, image_column = "image_path", labe
       aes(x = x + offset, y = y, image = .data[[image_column]]),
       size = 0.025, asp = 1.0
     ) +
-    geom_tiplab()
+    geom_tiplab(size = 3)
 }
 
 us_state_flag_tree(t, a, image_column = "ImagePath", label_column = "accession")
