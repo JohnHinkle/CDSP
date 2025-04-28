@@ -6,6 +6,6 @@
 #' @export
 #' @examples
 #' to_image <- function(data = d, column_name = "state")
-to_image <- function(data, column_name = "state"){
-  dplyr::mutate(data, ImagePath = paste0(new_dir, "/", .data[[column_name]], ".png"))
+to_image <- function(data, column_name = "state", dir = "states"){
+  dplyr::mutate(data, ImagePath = paste0(dir, "/", .data[[column_name]], ".png"))
 }
