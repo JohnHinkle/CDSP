@@ -34,15 +34,8 @@ head(a)
 ## Wrangle annotation data
 
 ```{r}
-a <- a |>
-  mutate(state = str_extract(misc, "(?<=/)[^/]+(?=/)")) |>
-  mutate(state = ifelse(state == "Memphis", "Tennessee", state)) |>
-  select(-`...1`, -misc)
-head(a)
-```
-
-```{r}
 a <- to_image(a)
+head(a)
 ```
 
 ## Pairwise distances
