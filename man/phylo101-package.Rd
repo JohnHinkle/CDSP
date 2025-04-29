@@ -6,10 +6,10 @@
 \alias{phylo101-package}
 \title{phylo101: Introduction to Phylogenetics}
 \description{
-What the package does (one paragraph).
+This package provides an introduction to phylogenetic analysis.
 }
 \author{
-\strong{Maintainer}: John Hinkle \email{john.hinkle@utexas.edu} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: John Hinkle \email{john.hinkle@utexas.edu}
 
 }
 \keyword{internal}

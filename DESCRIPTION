@@ -5,9 +5,8 @@ Authors@R:
     person(given = "John",
            family = "Hinkle",
            role = c("aut", "cre"),
-           email = "john.hinkle@utexas.edu",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "john.hinkle@utexas.edu")
+Description: This package provides an introduction to phylogenetic analysis.
 Depends: R (>= 4.3)
 License: GPL-3
 Encoding: UTF-8
