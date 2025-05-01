@@ -41,29 +41,53 @@ s <- USFluSeqs
 print(s)
 ```
 
+# Models of DNA Evolution
+
 ## Calculate pairwise distances
 
-<https://en.wikipedia.org/wiki/Models_of_DNA_evolution>
+Wikipedia entry about models: <https://en.wikipedia.org/wiki/Models_of_DNA_evolution>
+
+I would run a few different models, starting with "raw". Definitely include "K80" (see below) and then pick 1-2 other models to run. Briefly explain why one model might be better than another (hint: the example data are seasonal flu sequences). ?dist.dna() can be helpful
+
+You can visualize the pairwise distances as a distance matrix. This isn't a super practical figure that you would include in most main manuscripts, but is useful for showing that the distance matrix exists and helps to show what a distance matrix is.
 
 ```{r}
-#
+# raw
+```
+
+```{r}
+# Kimura, 1980
 dist <- dist.dna(s, model = "K80")
 ```
 
+# Methods of Phylogenetic Tree Construction
+
 ## Construct phylogenetic tree and create tree object
+
+Construct trees using one of the distance matrices created above, preferably the "best" one (if available). Then run a few methods of constructing the phylogeny. I've provided some suggestions- but feel free to use different methods. After each model I would create a basic tree visualization (using ggtree makes the most sense here).
 
 ```{r}
 # Neighbor-Joining 2.0
 t1 <- bionj(dist)
+```
 
+```{r}
 # Neighbor-Joining
 t2 <- nj(dist)
+```
 
+```{r}
 # UPGMA
 ## I suggest adding the phangorn package for this
 
-# Minimum Evolution
 ```
+
+```{r}
+# Minimum Evolution
+
+```
+
+# Phylogenetic Tree Visualization
 
 ## Plot/visualize tree using ggtree
 
