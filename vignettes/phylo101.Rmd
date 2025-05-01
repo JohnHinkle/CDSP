@@ -43,18 +43,25 @@ print(s)
 
 ## Calculate pairwise distances
 
+<https://en.wikipedia.org/wiki/Models_of_DNA_evolution>
+
 ```{r}
+#
 dist <- dist.dna(s, model = "K80")
 ```
 
-## Create tree object
+## Construct phylogenetic tree and create tree object
 
 ```{r}
 # Neighbor-Joining 2.0
-t <- bionj(dist)
+t1 <- bionj(dist)
 
 # Neighbor-Joining
-# Maximum Likelihood
+t2 <- nj(dist)
+
+# UPGMA
+## I suggest adding the phangorn package for this
+
 # Minimum Evolution
 ```
 
@@ -62,14 +69,14 @@ t <- bionj(dist)
 
 ```{r}
 # open tree in new window for optimal viewing
-ggtree(t) +
+ggtree(t1) +
   geom_tiplab()
 ```
 
 ## Add metadata to the tree
 
 ```{r}
-p <- ggtree(t) %<+% d
+p <- ggtree(t1) %<+% d
 ```
 
 ## Annotate tree tip labels using color
