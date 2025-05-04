@@ -11,5 +11,11 @@ This package provides an introduction to phylogenetic analysis.
 \author{
 \strong{Maintainer}: John Hinkle \email{john.hinkle@utexas.edu}
 
+Authors:
+\itemize{
+  \item Madina Seidualy \email{madise@utexas.edu}
+  \item Monica Dooley \email{monica-dooley@utexas.edu}
+}
+
 }
 \keyword{internal}
