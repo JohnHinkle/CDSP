@@ -138,7 +138,7 @@ Here, four different methods are shown to construct a phylogenetic tree with a d
 # Neighbor-Joining
 t1 <- nj(dist0)
 ggtree(t1) +
-  geom_tiplab(size=2) + options(ignore.negative.edge = TRUE)
+  geom_tiplab(size=2)
 ```
 
 Next is an updated version of the previous method. This method minimizes the variances associated with each distance estimate being made. It is essentially a Minimum Variance Reduction Method, but it does not account for covariance.
