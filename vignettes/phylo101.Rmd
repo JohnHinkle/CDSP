@@ -50,47 +50,57 @@ print(s)
 
 ```{r}
 #when sequences so different, evolutionary distant species
-dist0<-dist.dna(s,model = "raw")
+dist0 <- dist.dna(s,model = "raw")
 
-#as.matrix(dist0)
-#very long matrix
+# view top left corner of distance matrix
+matrix0 <- as.matrix(dist0)
+print(matrix0[1:5, 1:5])
 ```
 
 **Kimura, 1980:** This model is the best for seasonal flu sequences, because the seasonal flu evolves quickly with high transition/transversion bias - and K80 model considers those different rates - reflecting real mutation patterns.
 
 ```{r}
 # Kimura, 1980
+dist1 <- dist.dna(s, model = "K80")
 
-dist <- dist.dna(s, model = "K80")
-#as.matrix(dist)
+# view top left corner of distance matrix
+matrix1 <- as.matrix(dist1)
+print(matrix1[1:5, 1:5])
 ```
 
 **Jukes & Cantor, 1969:** This model assumes equal base frequencies and substitution rates.
 
 ```{r}
 #Jukes and Cantor 1969
-dist1<-dist.dna(s,model = "JC69")
-#as.matrix(dist1)
+dist2 <- dist.dna(s,model = "JC69")
+
+# view top left corner of distance matrix
+matrix2 <- as.matrix(dist2)
+print(matrix2[1:5, 1:5])
 ```
 
 **Felsenstein, 1981:** This model generalizes the JC69 model by relaxing the assumption of equal base frequencies.
 
 ```{r}
 # Felsenstein (1981)
-dist2<-dist.dna(s,model = "F81")
+dist3 <- dist.dna(s,model = "F81")
+
+# view top left corner of distance matrix
+matrix3 <- as.matrix(dist3)
+print(matrix3[1:5, 1:5])
 ```
 
 **Finding the largest difference between matrices**
 
 ```{r}
-#Decided to compare the differences is matrixes
+#Decided to compare the differences is matrices
 #here comparing to matrix and extracting the higest difference value
 
 d1 <- max(abs(as.matrix(dist0) - as.matrix(dist1)))
-d2 <- max(abs(as.matrix(dist0) - as.matrix(dist)))
-d3 <- max(abs(as.matrix(dist0) - as.matrix(dist2)))
-d4 <- max(abs(as.matrix(dist1) - as.matrix(dist)))
-d5 <- max(abs(as.matrix(dist) - as.matrix(dist2)))
+d2 <- max(abs(as.matrix(dist0) - as.matrix(dist2)))
+d3 <- max(abs(as.matrix(dist0) - as.matrix(dist3)))
+d4 <- max(abs(as.matrix(dist1) - as.matrix(dist2)))
+d5 <- max(abs(as.matrix(dist1) - as.matrix(dist3)))
 
 
  
@@ -99,10 +109,10 @@ d5 <- max(abs(as.matrix(dist) - as.matrix(dist2)))
 # Making a data frame to visualize as a table
 comparison_table <- data.frame(
   Comparison = c("dist0 vs dist1 (raw vs JC69)",
-                 "dist0 vs dist (raw vs K80)",
-                 "dist0 vs dist2 (raw vs F81)",
-                 "dist1 vs dist (JC69 vs K80)",
-                 "dist vs dist2 (K80 vs F81)"),
+                 "dist0 vs dist2 (raw vs K80)",
+                 "dist0 vs dist3 (raw vs F81)",
+                 "dist1 vs dist2 (JC69 vs K80)",
+                 "dist1 vs dist3 (K80 vs F81)"),
   Max_Abs_Difference = c(d1, d2, d3, d4, d5)
 )
 
@@ -114,11 +124,9 @@ comparison_table
 
 ## Construct phylogenetic tree and create tree object
 
-Construct trees using one of the distance matrices created above, preferably the "best" one (if available). Then run a few methods of constructing the phylogeny. I've provided some suggestions- but feel free to use different methods. After each model I would create a basic tree visualization (using ggtree makes the most sense here).
-
 ```{r}
 # Neighbor-Joining 2.0
-t1 <- bionj(dist)
+t1 <- bionj(dist0)
 
 #contructing tree to another model matrix
 t_jc <-bionj(dist1)
@@ -128,7 +136,7 @@ Here, four different methods are shown to construct a phylogenetic tree with a d
 
 ```{r}
 # Neighbor-Joining
-t1 <- nj(dist)
+t1 <- nj(dist0)
 ggtree(t1) +
   geom_tiplab(size=2) + options(ignore.negative.edge = TRUE)
 ```
@@ -137,7 +145,7 @@ Next is an updated version of the previous method. This method minimizes the var
 
 ```{r}
 # Neighbor-Joining 2.0
-t2 <- bionj(dist)
+t2 <- bionj(dist0)
 ggtree(t2) +
   geom_tiplab(size=2) 
 ```
@@ -146,7 +154,7 @@ Nest we have a minimum evolution approach that is essentially and neighbor join 
 
 ```{r}
 # Minimum Evolution OLS
-t3 <- fastme.ols(dist)
+t3 <- fastme.ols(dist0)
 ggtree(t3) +
   geom_tiplab(size=2)
 ```
@@ -155,7 +163,7 @@ Lastly, here is a similar approach as the previous, but this uses a balanced min
 
 ```{r}
 #Minimum Evolution BAL
-t4 <- fastme.bal(dist)
+t4 <- fastme.bal(dist0)
 ggtree(t4) +
   geom_tiplab(size=2)
 ```
@@ -164,15 +172,15 @@ We can assess how accurate these visualizations are to the distance matrix using
 
 ```{r}
 #Assessing nj
-x1 <- as.vector(dist)
+x1 <- as.vector(dist0)
 y1 <- as.vector(as.dist(cophenetic(t1)))
 plot(x1, y1, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is NJ appropriate?", pch=20, col=transp("black",.1), cex=3)
-abline(lm(y~x), col="red")
+abline(lm(y1~x1), col="red")
 ```
 
 ```{r}
 #Assessing bionj
-x2 <- as.vector(dist)
+x2 <- as.vector(dist0)
 y2 <- as.vector(as.dist(cophenetic(t2)))
 plot(x2, y2, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is BIONJ appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y2~x2), col="red")
@@ -180,7 +188,7 @@ abline(lm(y2~x2), col="red")
 
 ```{r}
 #Assessing fastme.ols
-x3 <- as.vector(dist)
+x3 <- as.vector(dist0)
 y3 <- as.vector(as.dist(cophenetic(t3)))
 plot(x3, y3, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is ME OLS appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y3~x3), col="red")
@@ -188,7 +196,7 @@ abline(lm(y3~x3), col="red")
 
 ```{r}
 #Assessing fastme.bal
-x4 <- as.vector(dist)
+x4 <- as.vector(dist0)
 y4 <- as.vector(as.dist(cophenetic(t1)))
 plot(x4, y4, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is ME BAL appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y4~x4), col="red")
