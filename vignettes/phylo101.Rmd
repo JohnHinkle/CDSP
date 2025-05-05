@@ -46,15 +46,9 @@ print(s)
 
 ## Calculate pairwise distances
 
-Wikipedia entry about models: <https://en.wikipedia.org/wiki/Models_of_DNA_evolution>
-
-We run a few different models, starting with "raw". Definitely include "K80" (see below) and then pick 1-2 other models to run. 
-
-We can visualize the pairwise distances as a distance matrix. This isn't a super practical figure that you would include in most main manuscripts, but is useful for showing that the distance matrix exists and helps to show what a distance matrix is.
-
+**Raw distances**
 
 ```{r}
-# raw
 #when sequences so different, evolutionary distant species
 dist0<-dist.dna(s,model = "raw")
 
@@ -62,8 +56,7 @@ dist0<-dist.dna(s,model = "raw")
 #very long matrix
 ```
 
-The Kimure 1980 model is the best for seasonal flu sequences; Because flu evolves quickly
-with high transition/transversion bias - and K80 model considers those different rates - reflecting real mutation patterns
+**Kimura, 1980:** This model is the best for seasonal flu sequences, because the seasonal flu evolves quickly with high transition/transversion bias - and K80 model considers those different rates - reflecting real mutation patterns.
 
 ```{r}
 # Kimura, 1980
@@ -72,20 +65,24 @@ dist <- dist.dna(s, model = "K80")
 #as.matrix(dist)
 ```
 
-JC69 assumes equal base frequencies and substitution rates.
-Felsenstein (1981) generalized the JC model by relaxing the assumption of equal base frequencies.
+**Jukes & Cantor, 1969:** This model assumes equal base frequencies and substitution rates.
 
 ```{r}
 #Jukes and Cantor 1969
 dist1<-dist.dna(s,model = "JC69")
 #as.matrix(dist1)
+```
 
+**Felsenstein, 1981:** This model generalizes the JC69 model by relaxing the assumption of equal base frequencies.
+
+```{r}
 # Felsenstein (1981)
 dist2<-dist.dna(s,model = "F81")
+```
 
- 
-#finding largest difference between matrixes 
- 
+**Finding the largest difference between matrices**
+
+```{r}
 #Decided to compare the differences is matrixes
 #here comparing to matrix and extracting the higest difference value
 
@@ -126,9 +123,9 @@ t1 <- bionj(dist)
 #contructing tree to another model matrix
 t_jc <-bionj(dist1)
 ```
- 
+
 Here, four different methods are shown to construct a phylogenetic tree with a distance matrix as the input. First is the original neighbor-join method. This method essentially works to find pairs, or neighbors, that minimize the total branch length at each stage of clustering. The resulting tree is then plotted.
- 
+
 ```{r}
 # Neighbor-Joining
 t1 <- nj(dist)
@@ -198,11 +195,9 @@ p + geom_tiplab(aes(color = state), size = 3) +
     theme_tree2()
 ```
 
-
 ## Annotation using US state flags
 
-A color scale for 15 states isn't very intuitive for the viewer to comprehend, so the function 
-**us_state_flag_tree()** annotates each tip label based on the state a flu strain sequence is from.
+A color scale for 15 states isn't very intuitive for the viewer to comprehend, so the function **us_state_flag_tree()** annotates each tip label based on the state a flu strain sequence is from.
 
 First, we need to add the path to the state flag icons to the metadata using the custom **to_image()** function.
 
@@ -213,19 +208,5 @@ d <- to_image(d)
 Now we can use **us_state_flag_tree()** to create a tree where the tip labels are annotated with US state flags.
 
 ```{r}
-#us_state_flag_tree(tree = t1, metadata = d, image_column = "ImagePath", label_column = "accession")
-```
-
-## For comparison here building another phylogenetic tree from different matrix model JC69
-The both tree is identical, since there is no significant differences in genetic distances using different models;
-```{r}
-#another model tree construction
-p2 <- ggtree(t_jc) %<+% d
-
-library(viridis)
-p2 + geom_tiplab(aes(color = year), size = 3) +
-    scale_color_viridis_c() +
-    theme_tree2()
-
-#us_state_flag_tree(tree = t_jc, metadata = d, image_column = "ImagePath", label_column = "accession")
+us_state_flag_tree(tree = t1, metadata = d, image_column = "ImagePath", label_column = "accession")
 ```
