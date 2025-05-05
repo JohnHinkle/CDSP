@@ -25,6 +25,7 @@ library(ggtree)
 library(ggimage)
 library(readr)
 library(phylo101)
+library(dplyr)
 ```
 
 ## Check that metadata is loaded
@@ -47,23 +48,32 @@ print(s)
 
 Wikipedia entry about models: <https://en.wikipedia.org/wiki/Models_of_DNA_evolution>
 
-I would run a few different models, starting with "raw". Definitely include "K80" (see below) and then pick 1-2 other models to run. Briefly explain why one model might be better than another (hint: the example data are seasonal flu sequences). ?dist.dna() can be helpful
+We run a few different models, starting with "raw". Definitely include "K80" (see below) and then pick 1-2 other models to run. 
 
 We can visualize the pairwise distances as a distance matrix. This isn't a super practical figure that you would include in most main manuscripts, but is useful for showing that the distance matrix exists and helps to show what a distance matrix is.
 
+
 ```{r}
 # raw
+#when sequences so different, evolutionary distant species
 dist0<-dist.dna(s,model = "raw")
 
 #as.matrix(dist0)
 #very long matrix
 ```
 
+The Kimure 1980 model is the best for seasonal flu sequences; Because flu evolves quickly
+with high transition/transversion bias - and K80 model considers those different rates - reflecting real mutation patterns
+
 ```{r}
 # Kimura, 1980
+
 dist <- dist.dna(s, model = "K80")
 #as.matrix(dist)
 ```
+
+JC69 assumes equal base frequencies and substitution rates.
+Felsenstein (1981) generalized the JC model by relaxing the assumption of equal base frequencies.
 
 ```{r}
 #Jukes and Cantor 1969
@@ -73,8 +83,11 @@ dist1<-dist.dna(s,model = "JC69")
 # Felsenstein (1981)
 dist2<-dist.dna(s,model = "F81")
 
-
+ 
 #finding largest difference between matrixes 
+ 
+#Decided to compare the differences is matrixes
+#here comparing to matrix and extracting the higest difference value
 
 d1 <- max(abs(as.matrix(dist0) - as.matrix(dist1)))
 d2 <- max(abs(as.matrix(dist0) - as.matrix(dist)))
@@ -83,7 +96,10 @@ d4 <- max(abs(as.matrix(dist1) - as.matrix(dist)))
 d5 <- max(abs(as.matrix(dist) - as.matrix(dist2)))
 
 
+ 
 # Make a data frame
+ 
+# Making a data frame to visualize as a table
 comparison_table <- data.frame(
   Comparison = c("dist0 vs dist1 (raw vs JC69)",
                  "dist0 vs dist (raw vs K80)",
@@ -96,8 +112,6 @@ comparison_table <- data.frame(
 comparison_table
 
 ```
-
-
 
 # Methods of Phylogenetic Tree Construction
 
@@ -164,12 +178,11 @@ p + geom_tiplab(aes(color = state), size = 3) +
     theme_tree2()
 ```
 
-
-For comparison another tree contruciton using different matrix model
+For comparison here building another phylogenetic tree from different matrix model JC69
+The both tree is identical, since there is no significant differences in genetic distances using different models - 
+Briefly explain why one model might be better than another (hint: the example data are seasonal flu sequences). ?dist.dna() can be helpful
 ```{r}
-#another model tree contruction
-ggtree(t_jc) +
-  geom_tiplab()
+#another model tree construction
 p2 <- ggtree(t_jc) %<+% d
 
 library(viridis)
@@ -180,3 +193,5 @@ p2 + geom_tiplab(aes(color = year), size = 3) +
 p2 + geom_tiplab(aes(color = state), size = 3) +
     scale_color_hue(n = 15) +
     theme_tree2()
+
+#us_state_flag_tree(t_jc, d, image_column = "ImagePath", label_column = "accession")
