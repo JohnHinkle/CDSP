@@ -26,7 +26,7 @@ us_state_flag_tree <- function(tree, metadata, image_column = "image_path", labe
   p +
     ggimage::geom_image(
       data = tip_data,
-      aes(x = x + offset, y = y, image = .data[[image_column]]),
+      aes(x = x + offset, y = y, image = !!rlang::sym(image_column)),
       size = 0.025, asp = 1.0
     ) +
     ggtree::geom_tiplab(size = 3)
