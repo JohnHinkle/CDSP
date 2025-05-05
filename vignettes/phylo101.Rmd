@@ -163,6 +163,42 @@ ggtree(t4) +
   geom_tiplab(size=2)
 ```
 
+We can assess how accurate these visualizations are to the distance matrix using the cophenetic function, as below
+
+```{r}
+#Assessing nj
+x1 <- as.vector(dist)
+y1 <- as.vector(as.dist(cophenetic(t1)))
+plot(x1, y1, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is NJ appropriate?", pch=20, col=transp("black",.1), cex=3)
+abline(lm(y~x), col="red")
+```
+
+```{r}
+#Assessing bionj
+x2 <- as.vector(dist)
+y2 <- as.vector(as.dist(cophenetic(t2)))
+plot(x2, y2, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is BIONJ appropriate?", pch=20, col=transp("black",.1), cex=3)
+abline(lm(y2~x2), col="red")
+```
+
+```{r}
+#Assessing fastme.ols
+x3 <- as.vector(dist)
+y3 <- as.vector(as.dist(cophenetic(t3)))
+plot(x3, y3, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is ME OLS appropriate?", pch=20, col=transp("black",.1), cex=3)
+abline(lm(y3~x3), col="red")
+```
+
+```{r}
+#Assessing fastme.bal
+x4 <- as.vector(dist)
+y4 <- as.vector(as.dist(cophenetic(t1)))
+plot(x4, y4, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is ME BAL appropriate?", pch=20, col=transp("black",.1), cex=3)
+abline(lm(y4~x4), col="red")
+```
+
+As we can see, the fastme.ols method was the only one that did not adequately construct the tree based on the distance matrix. This is likely due to this being a small sample and the ols method being unweighted.
+
 # Phylogenetic Tree Visualization
 
 ## Plot/visualize tree using ggtree
