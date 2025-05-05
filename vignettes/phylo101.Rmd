@@ -64,27 +64,40 @@ dist <- dist.dna(s, model = "K80")
 
 ## Construct phylogenetic tree and create tree object
 
-Construct trees using one of the distance matrices created above, preferably the "best" one (if available). Then run a few methods of constructing the phylogeny. I've provided some suggestions- but feel free to use different methods. After each model I would create a basic tree visualization (using ggtree makes the most sense here).
-
-```{r}
-# Neighbor-Joining 2.0
-t1 <- bionj(dist)
-```
+Here, four different methods are shown to construct a phylogenetic tree with a distance matrix as the input. First is the original neighbor-join method. This method essentially works to find pairs, or neighbors, that minimize the total branch length at each stage of clustering. The resulting tree is then plotted.
 
 ```{r}
 # Neighbor-Joining
-t2 <- nj(dist)
+t1 <- nj(dist)
+ggtree(t1) +
+  geom_tiplab(size=2) + options(ignore.negative.edge = TRUE)
 ```
 
-```{r}
-# UPGMA
-## I suggest adding the phangorn package for this
+Next is an updated version of the previous method. This method minimizes the variances associated with each distance estimate being made. It is essentially a Minimum Variance Reduction Method, but it does not account for covariance.
 
+```{r}
+# Neighbor-Joining 2.0
+t2 <- bionj(dist)
+ggtree(t2) +
+  geom_tiplab(size=2) 
 ```
 
-```{r}
-# Minimum Evolution
+Nest we have a minimum evolution approach that is essentially and neighbor join method used in conjunction with ordinary least-squares (OLS), which searches for the best topology using nearest neighbor interchanges.
 
+```{r}
+# Minimum Evolution OLS
+t3 <- fastme.ols(dist)
+ggtree(t3) +
+  geom_tiplab(size=2)
+```
+
+Lastly, here is a similar approach as the previous, but this uses a balanced minimum evolution scheme, which is weighted so that sibling subtrees have equal weight.
+
+```{r}
+#Minimum Evolution BAL
+t4 <- fastme.bal(dist)
+ggtree(t4) +
+  geom_tiplab(size=2)
 ```
 
 # Phylogenetic Tree Visualization
