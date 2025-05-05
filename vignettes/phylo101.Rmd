@@ -129,10 +129,9 @@ A color scale for 15 states isn't very intuitive for the viewer to comprehend, s
 First, we need to add the path to the state flag icons to the metadata using **to_image()**
 
 ```{r}
-d <- to_image(d, "state", "states")
-d
+d <- to_image(d)
 ```
 
 ```{r}
-us_state_flag_tree(t1, d, image_column = "ImagePath", label_column = "accession")
+us_state_flag_tree(tree = t1, metadata = d, image_column = "ImagePath", label_column = "accession")
 ```
