@@ -126,11 +126,13 @@ p + geom_tiplab(aes(color = state), size = 3) +
 
 A color scale for 15 states isn't very intuitive for the viewer to comprehend, so the function **us_state_flag_tree()** annotates each tip label based on the state a flu strain sequence is from.
 
-First, we need to add the path to the state flag icons to the metadata using **to_image()**
+First, we need to add the path to the state flag icons to the metadata using the custom **to_image()** function.
 
 ```{r}
 d <- to_image(d)
 ```
+
+Now we can use **us_state_flag_tree()** to create a tree where the tip labels are annotated with US state flags.
 
 ```{r}
 us_state_flag_tree(tree = t1, metadata = d, image_column = "ImagePath", label_column = "accession")
