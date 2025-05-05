@@ -49,16 +49,55 @@ Wikipedia entry about models: <https://en.wikipedia.org/wiki/Models_of_DNA_evolu
 
 I would run a few different models, starting with "raw". Definitely include "K80" (see below) and then pick 1-2 other models to run. Briefly explain why one model might be better than another (hint: the example data are seasonal flu sequences). ?dist.dna() can be helpful
 
-You can visualize the pairwise distances as a distance matrix. This isn't a super practical figure that you would include in most main manuscripts, but is useful for showing that the distance matrix exists and helps to show what a distance matrix is.
+We can visualize the pairwise distances as a distance matrix. This isn't a super practical figure that you would include in most main manuscripts, but is useful for showing that the distance matrix exists and helps to show what a distance matrix is.
 
 ```{r}
 # raw
+dist0<-dist.dna(s,model = "raw")
+
+#as.matrix(dist0)
+#very long matrix
 ```
 
 ```{r}
 # Kimura, 1980
 dist <- dist.dna(s, model = "K80")
+#as.matrix(dist)
 ```
+
+```{r}
+#Jukes and Cantor 1969
+dist1<-dist.dna(s,model = "JC69")
+#as.matrix(dist1)
+
+# Felsenstein (1981)
+dist2<-dist.dna(s,model = "F81")
+
+
+#finding largest difference between matrixes 
+
+d1 <- max(abs(as.matrix(dist0) - as.matrix(dist1)))
+d2 <- max(abs(as.matrix(dist0) - as.matrix(dist)))
+d3 <- max(abs(as.matrix(dist0) - as.matrix(dist2)))
+d4 <- max(abs(as.matrix(dist1) - as.matrix(dist)))
+d5 <- max(abs(as.matrix(dist) - as.matrix(dist2)))
+
+
+# Make a data frame
+comparison_table <- data.frame(
+  Comparison = c("dist0 vs dist1 (raw vs JC69)",
+                 "dist0 vs dist (raw vs K80)",
+                 "dist0 vs dist2 (raw vs F81)",
+                 "dist1 vs dist (JC69 vs K80)",
+                 "dist vs dist2 (K80 vs F81)"),
+  Max_Abs_Difference = c(d1, d2, d3, d4, d5)
+)
+
+comparison_table
+
+```
+
+
 
 # Methods of Phylogenetic Tree Construction
 
@@ -69,6 +108,9 @@ Construct trees using one of the distance matrices created above, preferably the
 ```{r}
 # Neighbor-Joining 2.0
 t1 <- bionj(dist)
+
+#contructing tree to another model matrix
+t_jc <-bionj(dist1)
 ```
 
 ```{r}
@@ -121,3 +163,20 @@ p + geom_tiplab(aes(color = state), size = 3) +
     scale_color_hue(n = 15) +
     theme_tree2()
 ```
+
+
+For comparison another tree contruciton using different matrix model
+```{r}
+#another model tree contruction
+ggtree(t_jc) +
+  geom_tiplab()
+p2 <- ggtree(t_jc) %<+% d
+
+library(viridis)
+p2 + geom_tiplab(aes(color = year), size = 3) +
+    scale_color_viridis_c() +
+    theme_tree2()
+
+p2 + geom_tiplab(aes(color = state), size = 3) +
+    scale_color_hue(n = 15) +
+    theme_tree2()
