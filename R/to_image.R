@@ -5,7 +5,6 @@
 #' @keywords image
 #' @export
 #' @examples
-#' to_image <- function(data = d, column_name = "state")
-to_image <- function(data, column_name = "state", dir = "states"){
-  dplyr::mutate(data, ImagePath = paste0(dir, "/", .data[[column_name]], ".png"))
-}
+#' function(data = d, column_name = "state", dir = "states", package_name = "phylo101")
+to_image <- function(data, column_name = "state", subdir = "flags", package_name = "phylo101") {
+  dplyr::mutate( data, ImagePath = mapply(function(state_val) { system.file( file.path(subdir, paste0(gsub(" ", "", state_val), ".png")), package = package_name ) }, .data[[column_name]]) ) }

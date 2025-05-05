@@ -126,21 +126,41 @@ t1 <- bionj(dist)
 #contructing tree to another model matrix
 t_jc <-bionj(dist1)
 ```
-
+ 
+Here, four different methods are shown to construct a phylogenetic tree with a distance matrix as the input. First is the original neighbor-join method. This method essentially works to find pairs, or neighbors, that minimize the total branch length at each stage of clustering. The resulting tree is then plotted.
+ 
 ```{r}
 # Neighbor-Joining
-t2 <- nj(dist)
+t1 <- nj(dist)
+ggtree(t1) +
+  geom_tiplab(size=2) + options(ignore.negative.edge = TRUE)
 ```
 
-```{r}
-# UPGMA
-## I suggest adding the phangorn package for this
+Next is an updated version of the previous method. This method minimizes the variances associated with each distance estimate being made. It is essentially a Minimum Variance Reduction Method, but it does not account for covariance.
 
+```{r}
+# Neighbor-Joining 2.0
+t2 <- bionj(dist)
+ggtree(t2) +
+  geom_tiplab(size=2) 
 ```
 
-```{r}
-# Minimum Evolution
+Nest we have a minimum evolution approach that is essentially and neighbor join method used in conjunction with ordinary least-squares (OLS), which searches for the best topology using nearest neighbor interchanges.
 
+```{r}
+# Minimum Evolution OLS
+t3 <- fastme.ols(dist)
+ggtree(t3) +
+  geom_tiplab(size=2)
+```
+
+Lastly, here is a similar approach as the previous, but this uses a balanced minimum evolution scheme, which is weighted so that sibling subtrees have equal weight.
+
+```{r}
+#Minimum Evolution BAL
+t4 <- fastme.bal(dist)
+ggtree(t4) +
+  geom_tiplab(size=2)
 ```
 
 # Phylogenetic Tree Visualization
@@ -178,9 +198,26 @@ p + geom_tiplab(aes(color = state), size = 3) +
     theme_tree2()
 ```
 
-For comparison here building another phylogenetic tree from different matrix model JC69
-The both tree is identical, since there is no significant differences in genetic distances using different models - 
-Briefly explain why one model might be better than another (hint: the example data are seasonal flu sequences). ?dist.dna() can be helpful
+
+## Annotation using US state flags
+
+A color scale for 15 states isn't very intuitive for the viewer to comprehend, so the function 
+**us_state_flag_tree()** annotates each tip label based on the state a flu strain sequence is from.
+
+First, we need to add the path to the state flag icons to the metadata using the custom **to_image()** function.
+
+```{r}
+d <- to_image(d)
+```
+
+Now we can use **us_state_flag_tree()** to create a tree where the tip labels are annotated with US state flags.
+
+```{r}
+#us_state_flag_tree(tree = t1, metadata = d, image_column = "ImagePath", label_column = "accession")
+```
+
+## For comparison here building another phylogenetic tree from different matrix model JC69
+The both tree is identical, since there is no significant differences in genetic distances using different models;
 ```{r}
 #another model tree construction
 p2 <- ggtree(t_jc) %<+% d
@@ -190,8 +227,5 @@ p2 + geom_tiplab(aes(color = year), size = 3) +
     scale_color_viridis_c() +
     theme_tree2()
 
-p2 + geom_tiplab(aes(color = state), size = 3) +
-    scale_color_hue(n = 15) +
-    theme_tree2()
-
-#us_state_flag_tree(t_jc, d, image_column = "ImagePath", label_column = "accession")
+#us_state_flag_tree(tree = t_jc, metadata = d, image_column = "ImagePath", label_column = "accession")
+```

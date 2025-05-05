@@ -24,6 +24,6 @@ us_state_flag_tree(
 This function allows you to plot a phylogenetic tree annotated with the United States of America state flag that corresponds with a tip.
 }
 \examples{
-us_state_flag_tree <- function(tree = t, metadata = d, image_column = "image_path", label_column = "label")
+us_state_flag_tree(tree = t, metadata = d, image_column = "image_path", label_column = "label")
 }
 \keyword{tree}

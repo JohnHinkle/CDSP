@@ -2,10 +2,18 @@ Package: phylo101
 Title: Introduction to Phylogenetics
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "John",
+    c(person(given = "John",
            family = "Hinkle",
            role = c("aut", "cre"),
-           email = "john.hinkle@utexas.edu")
+           email = "john.hinkle@utexas.edu"),
+           person(given = "Madina",
+           family = "Seidualy",
+           role = "aut",
+           email = "madise@utexas.edu"),
+           person(given = "Monica",
+           family = "Dooley",
+           role = "aut",
+           email = "monica-dooley@utexas.edu"))
 Description: This package provides an introduction to phylogenetic analysis.
 Depends: R (>= 4.3)
 License: GPL-3
