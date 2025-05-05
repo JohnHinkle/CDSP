@@ -94,7 +94,7 @@ print(matrix3[1:5, 1:5])
 
 ```{r}
 #Decided to compare the differences is matrices
-#here comparing to matrix and extracting the higest difference value
+#here comparing two matrices and extracting the highest difference value
 
 d1 <- max(abs(as.matrix(dist0) - as.matrix(dist1)))
 d2 <- max(abs(as.matrix(dist0) - as.matrix(dist2)))
@@ -102,8 +102,6 @@ d3 <- max(abs(as.matrix(dist0) - as.matrix(dist3)))
 d4 <- max(abs(as.matrix(dist1) - as.matrix(dist2)))
 d5 <- max(abs(as.matrix(dist1) - as.matrix(dist3)))
 
-
- 
 # Make a data frame
  
 # Making a data frame to visualize as a table
@@ -126,17 +124,17 @@ comparison_table
 
 ```{r}
 # Neighbor-Joining 2.0
-t1 <- bionj(dist0)
+t1 <- bionj(dist1)
 
-#contructing tree to another model matrix
-t_jc <-bionj(dist1)
+#contructing tree for another model matrix
+t_jc <-bionj(dist2)
 ```
 
 Here, four different methods are shown to construct a phylogenetic tree with a distance matrix as the input. First is the original neighbor-join method. This method essentially works to find pairs, or neighbors, that minimize the total branch length at each stage of clustering. The resulting tree is then plotted.
 
 ```{r}
 # Neighbor-Joining
-t1 <- nj(dist0)
+t1 <- nj(dist1)
 ggtree(t1) +
   geom_tiplab(size=2)
 ```
@@ -145,7 +143,7 @@ Next is an updated version of the previous method. This method minimizes the var
 
 ```{r}
 # Neighbor-Joining 2.0
-t2 <- bionj(dist0)
+t2 <- bionj(dist1)
 ggtree(t2) +
   geom_tiplab(size=2) 
 ```
@@ -154,7 +152,7 @@ Nest we have a minimum evolution approach that is essentially and neighbor join 
 
 ```{r}
 # Minimum Evolution OLS
-t3 <- fastme.ols(dist0)
+t3 <- fastme.ols(dist1)
 ggtree(t3) +
   geom_tiplab(size=2)
 ```
@@ -163,7 +161,7 @@ Lastly, here is a similar approach as the previous, but this uses a balanced min
 
 ```{r}
 #Minimum Evolution BAL
-t4 <- fastme.bal(dist0)
+t4 <- fastme.bal(dist1)
 ggtree(t4) +
   geom_tiplab(size=2)
 ```
@@ -172,7 +170,7 @@ We can assess how accurate these visualizations are to the distance matrix using
 
 ```{r}
 #Assessing nj
-x1 <- as.vector(dist0)
+x1 <- as.vector(dist1)
 y1 <- as.vector(as.dist(cophenetic(t1)))
 plot(x1, y1, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is NJ appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y1~x1), col="red")
@@ -180,7 +178,7 @@ abline(lm(y1~x1), col="red")
 
 ```{r}
 #Assessing bionj
-x2 <- as.vector(dist0)
+x2 <- as.vector(dist1)
 y2 <- as.vector(as.dist(cophenetic(t2)))
 plot(x2, y2, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is BIONJ appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y2~x2), col="red")
@@ -188,7 +186,7 @@ abline(lm(y2~x2), col="red")
 
 ```{r}
 #Assessing fastme.ols
-x3 <- as.vector(dist0)
+x3 <- as.vector(dist1)
 y3 <- as.vector(as.dist(cophenetic(t3)))
 plot(x3, y3, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is ME OLS appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y3~x3), col="red")
@@ -196,7 +194,7 @@ abline(lm(y3~x3), col="red")
 
 ```{r}
 #Assessing fastme.bal
-x4 <- as.vector(dist0)
+x4 <- as.vector(dist1)
 y4 <- as.vector(as.dist(cophenetic(t1)))
 plot(x4, y4, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="Is ME BAL appropriate?", pch=20, col=transp("black",.1), cex=3)
 abline(lm(y4~x4), col="red")
